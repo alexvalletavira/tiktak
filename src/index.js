@@ -53,12 +53,15 @@ class Board extends React.Component{
     handleRestartButton(){
         const squares2 = new Array(9).fill(null);
         this.setState({squares: squares2, turno: false, won: false})
-        this.state.allMoves.length = 0;
+        const allMoves2 = new Array(0);
+        this.setState({allMoves: allMoves2,})
     }
 
     handleHistoryButton(i){
-        this.setState({squares: this.state.allMoves[i], turno: (i % 2) === 0, won: false})
-        this.state.allMoves.length = i+1;
+        this.setState({squares: this.state.allMoves[i], turno: (i % 2) === 0, won: false, })
+        const allMoves2 = this.state.allMoves;
+        allMoves2.length = i + 1;
+        this.setState({allMoves: allMoves2,})
     }
 
     victory(squares2){
