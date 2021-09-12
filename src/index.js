@@ -8,7 +8,7 @@ import Container from "@material-ui/core/Container";
 class Square extends React.Component{
     render(){
         return(
-            <Button variant="contained" style={{ fontSize: '63px', "minHeight": "200px", "minWidth": "200px", "color":"#F5E8C7", "backgroundColor": "#9E7777", }} onClick={this.props.onClick}>{this.props.value}</Button>
+            <Button variant="contained" style={{ fontSize: '5vw', "minHeight": "10vw", "minWidth": "10vw", "color":"#F5E8C7", "backgroundColor": "#9E7777", }} onClick={this.props.onClick}>{this.props.value}</Button>
         );
     }
 }
@@ -68,11 +68,17 @@ class Board extends React.Component{
 
         const condition = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
 
+        if(this.state.allMoves.length === 9){
+            this.setState({won: true, text: "Tie! No one wins."});
+        }
+
         for(var index = 0; index < condition.length; index++){
             if( (squares2[condition[index][0]] != null) &&(squares2[condition[index][0]] === squares2[condition[index][1]]) && (squares2[condition[index][1]] === squares2[condition[index][2]])){
                 this.setState({won: true, text: "Player " + (this.state.turno ? 'O' : 'X') + " has won"})
             }
         }
+
+
     }
 
     historyButtons(){
@@ -95,31 +101,35 @@ class Board extends React.Component{
     render(){
 
         return(
-            <div style={{ "display":"flex", "flexDirection": "column", "gap": "25px"}}>
-                <div className={"bigText"}>
-                    {this.state.text}
-                </div>
-                <div className="board">
-                    <div className={"fila"}>
-                        {this.renderSquare(0)}
-                        {this.renderSquare(1)}
-                        {this.renderSquare(2)}
+            <div className="App" style={{height: "100vh"}}>
+                <Container maxWidth="md" styles={{display: "flex", flexDirection: "column", height: "100vh"}}>
+                    <div style={{ "display":"flex", "flexDirection": "column", "gap": "0.5vw"}}>
+                        <div className={"bigText"}>
+                            {this.state.text}
+                        </div>
+                        <div className="board">
+                            <div className={"fila"}>
+                                {this.renderSquare(0)}
+                                {this.renderSquare(1)}
+                                {this.renderSquare(2)}
+                            </div>
+                            <div className={"fila"}>
+                                {this.renderSquare(3)}
+                                {this.renderSquare(4)}
+                                {this.renderSquare(5)}
+                            </div>
+                            <div className={"fila"}>
+                                {this.renderSquare(6)}
+                                {this.renderSquare(7)}
+                                {this.renderSquare(8)}
+                            </div>
+                        </div>
+                        <div className={"history"}>
+                                <Button className="boton" variant="contained" style={{"color":"#F5E8C7", "backgroundColor": "#9E7777", }} onClick={()=>this.handleRestartButton()}> Restart </Button>
+                                {this.historyButtons()}
+                        </div>
                     </div>
-                    <div className={"fila"}>
-                        {this.renderSquare(3)}
-                        {this.renderSquare(4)}
-                        {this.renderSquare(5)}
-                    </div>
-                    <div className={"fila"}>
-                        {this.renderSquare(6)}
-                        {this.renderSquare(7)}
-                        {this.renderSquare(8)}
-                    </div>
-                </div>
-                <div className={"history"}>
-                        <Button className="boton" variant="contained" style={{"color":"#F5E8C7", "backgroundColor": "#9E7777", }} onClick={()=>this.handleRestartButton()}> Restart </Button>
-                        {this.historyButtons()}
-                </div>
+                </Container>
             </div>
 
         );
